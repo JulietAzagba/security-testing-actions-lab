@@ -1,0 +1,28 @@
+name: Bandit
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write   # required for SARIF upload to Code scanning
+
+jobs:
+  bandit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run Bandit
+        uses: PyCQA/bandit-action@v1
+        with:
+          targets: "."
+          # options: "-r -ll"   # optional: recursive + high severity/confidence
