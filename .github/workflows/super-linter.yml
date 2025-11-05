@@ -1,0 +1,26 @@
+name: Super Linter
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  lint:
+    name: Lint (GitHub Super-Linter)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Super-Linter
+        uses: super-linter/super-linter@v7
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional during setup: don't fail the job on lint errors
+          # DISABLE_ERRORS: true
